@@ -20,6 +20,12 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => 'true']);
 Route::group(['middleware' => 'verified'], function () {
-    // Rutas a verificar
+    /*
+     * Rutas a verificar
+     */
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    
+    // Rutas del community
+    Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index'])->name('community');
+    Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
 });
