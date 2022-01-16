@@ -28,4 +28,39 @@ Route::group(['middleware' => 'verified'], function () {
     // Rutas del community
     Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index'])->name('community');
     Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
+
+
+    /** 
+     * Ejercicio 1
+     */
+    // 1)
+    Route::get('/A41-1-1/{id_1?}', function ($id_1 = null) {
+        if(isset($id_1)) return view('A41_bien');
+        return view('A41_mal');
+    });
+    // 2)
+    Route::get('/A41-1-2/{id_1?}', function ($id_2 = 1) {
+        if($id_2 == 1) return view('A41_bien');
+        return view('A41_mal');
+    });
+    // 3)
+    Route::post('/A41-1-3', function () {
+        return [App\Http\Controllers\CommunityLinkController::class, 'store'];
+    });
+    // 4)
+    Route::match(['get', 'post'],'/A41-1-4/', function () {
+        return view('A41_bien');
+    });
+    // 5)
+    Route::get('/A41-1-5/{id_5}', function ($id_5 = 1) {
+        return view('A41_bien');
+    })->where('id_5', '[1-9]+');
+    // 6)
+    Route::get('/A41-1-6/{letras}/{numeros}', function ($letras, $numeros) {
+        return view('A41_bien');
+    })->where(['letras' => '[A-Za-z]+', 'numeros' => '[1-9]+']);
+    
+    /** 
+     * Ejercicio 2
+     */
 });
