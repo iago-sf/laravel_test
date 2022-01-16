@@ -71,4 +71,40 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('/timezone', function() {
         return config('app.timezone');
     });
+
+    /** 
+     * Ejercicio 2
+     */
+    // 1)+
+    Route::view('/inicio', 'home2');
+    // 2)
+    Route::get('/fecha', function(){
+        $d = new DateTime;
+        return view('fecha', [
+            'day' => explode('-', explode('T', $d->format('c'))[0])[2],
+            'month' => explode('-', explode('T', $d->format('c'))[0])[1], 
+            'year' => explode('-', explode('T', $d->format('c'))[0])[0]
+        ]);
+    });
+    // 3)
+    Route::get('/fechacompact', function(){
+        $d = new DateTime;
+        $day = explode('-', explode('T', $d->format('c'))[0])[2];
+        $month = explode('-', explode('T', $d->format('c'))[0])[1];
+        $year = explode('-', explode('T', $d->format('c'))[0])[0];
+
+        return view('fecha', compact('day', 'month', 'year'));
+    });
+    // 4)
+    Route::get('/fechawith', function(){
+        $d = new DateTime;
+        return view('fecha', with($d, function($date){
+            $values['day'] = explode('-', explode('T', $date->format('c'))[0])[2];
+            $values['month'] = explode('-', explode('T', $date->format('c'))[0])[1];
+            $values['year'] = explode('-', explode('T', $date->format('c'))[0])[0];
+            return $values;
+        }));
+    });
+    // 5-6)
+    // Route::view('/404', '404');
 });
