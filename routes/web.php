@@ -45,7 +45,7 @@ Route::group(['middleware' => 'verified'], function () {
     });
     // 3)
     Route::post('/A41-1-3', function () {
-        return [App\Http\Controllers\CommunityLinkController::class, 'store'];
+        return view('A41_bien');
     });
     // 4)
     Route::match(['get', 'post'],'/A41-1-4/', function () {
@@ -63,4 +63,12 @@ Route::group(['middleware' => 'verified'], function () {
     /** 
      * Ejercicio 2
      */
+    // 1)
+    Route::get('/host', function () {
+        return env('DB_HOST');
+    });
+    // 2)
+    Route::get('/timezone', function() {
+        return config('app.timezone');
+    });
 });
