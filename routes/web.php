@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +74,7 @@ Route::group(['middleware' => 'verified'], function () {
     });
 
     /** 
-     * Ejercicio 2
+     * Ejercicio 3
      */
     // 1)+
     Route::view('/inicio', 'home2');
@@ -107,4 +108,12 @@ Route::group(['middleware' => 'verified'], function () {
     });
     // 5-6)
     // Route::view('/404', '404');
+
+    /**
+     * Ejercicio 4
+     */
+    Route::get('/A41-4-1', function(){
+        $user = User::find(1);
+        return $user;
+    });
 });
