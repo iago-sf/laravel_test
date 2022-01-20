@@ -10,7 +10,7 @@
             @endif
             @foreach ($links as $link)
             <li class="lista-item">
-                <span class="child channel label label-default" style="background: {{ $link->channel->color }}">
+                <span class="child channel label label-default" style="background: {{ $link->channel->color }}; @if($link->channel->color == 'blue') color: white; @endif">
                     {{ $link->channel->title }}
                 </span>
                 <a class="child link" href="{{$link->link}}" target="_blank">
