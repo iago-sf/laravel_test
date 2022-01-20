@@ -5,6 +5,7 @@
   flex-direction: row;
   margin-bottom: .5rem;
   align-items: center;
+  border-bottom: 2px solid gray;
 }
 .lista-item .child{
   display: inline-flex;
