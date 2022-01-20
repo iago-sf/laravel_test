@@ -16,7 +16,7 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        $links = CommunityLink::paginate(25);
+        $links = CommunityLink::where('approved', 1)->paginate(25);
         $channels = Channel::orderBy('title','asc')->get();
 
         return view('community/index', compact('links', 'channels'));
@@ -45,12 +45,17 @@ class CommunityLinkController extends Controller
             'channel_id' => 'required|exists:channels,id'
         ]);
 
-        request()->merge(['user_id' => Auth::id(), 'channel_id' => 1 ]);
+        $approved = Auth::user()->isTrusted() ? true : false;
+        request()->merge(['user_id' => Auth::id(), 'approved' => $approved ]);
+
         CommunityLink::create($request->all());
         
-        // dd($request->url());
-        // return response('Error', 404);
-        return back();
+        if(Auth::user()->isTrusted()){
+            return back()->with('success','You added a new post!');
+            
+        } else {
+            return back()->with('info','Your post it\'s been sent to revision.');
+        }
     }
 
     /**

@@ -7,18 +7,18 @@
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="title">Title:</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="What is the title of your article?" value="{{old('title')}}">
+                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="What is the title of your article?" value="{{old('title')}}">
             </div>
             @error('title')
-            <div class="alert alert-danger mt-2">{{ $message }}</div>
+            <div class="text-danger mt-2">{{ $message }}</div>
             @enderror
 
             <div class="form-group">
                 <label for="link">Link:</label>
-                <input type="text" class="form-control" id="link" name="link" placeholder="What is the URL?" value="{{old('link')}}">
+                <input type="text" class="form-control @error('link') is-invalid @enderror" id="link" name="link" placeholder="What is the URL?" value="{{old('link')}}">
             </div>
             @error('link')
-            <div class="alert alert-danger mt-2">{{ $message }}</div>
+            <div class="text-danger mt-2">{{ $message }}</div>
             @enderror
 
             <div class="form-group">
