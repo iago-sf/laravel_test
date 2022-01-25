@@ -15,12 +15,19 @@ class CommunityLinkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Channel $channel = null)
     {
-        $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
+        if($channel){
+            $links = CommunityLink::where('approved', 1)->where('channel_id', $channel->id)->latest('updated_at')->paginate(25);
+            $filter = true;
+
+        } else {
+            $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
+            $filter = false;
+        }
         $channels = Channel::orderBy('title','asc')->get();
 
-        return view('community/index', compact('links', 'channels'));
+        return view('community/index', compact('links', 'channels', 'filter'));
     }
 
     /**
@@ -43,13 +50,16 @@ class CommunityLinkController extends Controller
         $approved = Auth::user()->isTrusted();
         $request->merge(['user_id' => Auth::id(), 'approved' => $approved]);
 
-        if(CommunityLink::hasAlreadyBeenSubmited($request->link)) {
+        $link = new CommunityLink();
+        $link->user_id = Auth::id();
+
+        if($link->hasAlreadyBeenSubmitted($request->link)) {
             return back()->with('info','You have updated a post.');
         
         } else {
             CommunityLink::create($request->all());
 
-            if(Auth::user()->isTrusted()){
+            if($approved){
                 return back()->with('success','You added a new post!');
                 
             } else {

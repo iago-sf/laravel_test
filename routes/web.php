@@ -28,4 +28,5 @@ Route::group(['middleware' => 'verified'], function () {
     // Rutas del community
     Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index'])->name('community');
     Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
+    Route::get('community/{channel}', [App\Http\Controllers\CommunityLinkController::class, 'index']);
 });
