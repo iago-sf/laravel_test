@@ -6,6 +6,7 @@ use App\Models\CommunityLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Channel;
+use App\Http\Requests\CommunityLinkForm;
 
 class CommunityLinkController extends Controller
 {
@@ -16,7 +17,7 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        $links = CommunityLink::where('approved', 1)->paginate(25);
+        $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
         $channels = Channel::orderBy('title','asc')->get();
 
         return view('community/index', compact('links', 'channels'));
@@ -38,23 +39,22 @@ class CommunityLinkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        $this->validate($request, [
-            'title' => 'required',
-            'link' => 'required|active_url|unique:community_links',
-            'channel_id' => 'required|exists:channels,id'
-        ]);
+    public function store(CommunityLinkForm $request) {
+        $approved = Auth::user()->isTrusted();
+        $request->merge(['user_id' => Auth::id(), 'approved' => $approved]);
 
-        $approved = Auth::user()->isTrusted() ? true : false;
-        request()->merge(['user_id' => Auth::id(), 'approved' => $approved ]);
-
-        CommunityLink::create($request->all());
+        if(CommunityLink::hasAlreadyBeenSubmited($request->link)) {
+            return back()->with('info','You have updated a post.');
         
-        if(Auth::user()->isTrusted()){
-            return back()->with('success','You added a new post!');
-            
         } else {
-            return back()->with('info','Your post it\'s been sent to revision.');
+            CommunityLink::create($request->all());
+
+            if(Auth::user()->isTrusted()){
+                return back()->with('success','You added a new post!');
+                
+            } else {
+                return back()->with('info','Your post it\'s been sent to revision.');
+            }
         }
     }
 
