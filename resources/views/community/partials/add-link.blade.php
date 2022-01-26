@@ -13,7 +13,7 @@
             <div class="text-danger mt-2">{{ $message }}</div>
             @enderror
 
-            <div class="form-group">
+            <div class="form-group mt-3">
                 <label for="link">Link:</label>
                 <input type="text" class="form-control @error('link') is-invalid @enderror" id="link" name="link" placeholder="What is the URL?" value="{{old('link')}}">
             </div>
@@ -21,7 +21,7 @@
             <div class="text-danger mt-2">{{ $message }}</div>
             @enderror
 
-            <div class="form-group">
+            <div class="form-group mt-3">
                 <label for="Channel">Channel:</label>
                 <select class="form-control @error('channel_id') is-invalid @enderror" name="channel_id">
                     <option selected disabled>Pick a Channel...</option>
@@ -38,7 +38,7 @@
                 @enderror
             </div>
 
-            <div class="form-group card-footer">
+            <div class="form-group mt-3">
                 <button class="btn btn-primary">Contribute Link</button>
             </div>
         </form>

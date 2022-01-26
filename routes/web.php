@@ -26,6 +26,7 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     
     // Rutas del community
-    Route::get('community/{channel}', [App\Http\Controllers\CommunityLinkController::class, 'index'])->name('community');
+    Route::get('community/{channel?}', [App\Http\Controllers\CommunityLinkController::class, 'index'])->name('community');
     Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
+    //Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index']);
 });
