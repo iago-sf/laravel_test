@@ -19,15 +19,13 @@ class CommunityLinkController extends Controller
     {
         if($channel){
             $links = CommunityLink::where('approved', 1)->where('channel_id', $channel->id)->latest('updated_at')->paginate(25);
-            $filter = true;
 
         } else {
             $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
-            $filter = false;
         }
         $channels = Channel::orderBy('title','asc')->get();
 
-        return view('community/index', compact('links', 'channels', 'filter'));
+        return view('community/index', compact('links', 'channels', 'channel'));
     }
 
     /**

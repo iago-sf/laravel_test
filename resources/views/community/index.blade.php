@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            @if(!$filter)
+            @if(!$channel)
                 <h1>Community</h1>
             @else
                 <h1><a class="a-link" href="/home">Community</a> - {{ $links[0]->channel->slug }} </h1>
