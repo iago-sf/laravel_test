@@ -10,9 +10,12 @@
             {{ $link->channel->title }} 
         </a>
     </span>
-    <button class="child votes btn btn-outline-dark text-center">
-        {{ $link->users()->count() }}
-    </button>
+    <form method="POST" action="/votes/{{ $link->id }}" class="child votes">
+        {{ csrf_field() }}
+        <button class=" btn text-center {{ Auth::check() && Auth::user()->votedFor($link) ? 'btn-dark' : 'btn-outline-dark' }}" {{ Auth::guest() ? 'disabled' : '' }}>
+            {{ $link->users()->count() }}
+        </button>
+    </form>
     <h6 class="child channel-topic">
         {{ $link->channel->slug }}
     </h6>

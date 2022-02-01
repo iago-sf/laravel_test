@@ -19,6 +19,9 @@ Route::get('/', function () {
 });
 
 Auth::routes(['verify' => 'true']);
+
+Route::get('community/{channel?}', [App\Http\Controllers\CommunityLinkController::class, 'index'])->name('community');
+
 Route::group(['middleware' => 'verified'], function () {
     /*
      * Rutas a verificar
@@ -26,7 +29,7 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     
     // Rutas del community
-    Route::get('community/{channel?}', [App\Http\Controllers\CommunityLinkController::class, 'index'])->name('community');
     Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
+    Route::post('votes/{link}', [App\Http\Controllers\CommunityLinkUserController::class, 'store']);
     //Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index']);
 });
