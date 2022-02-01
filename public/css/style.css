@@ -23,7 +23,7 @@
   width: 40%;
 }
 .creator {
-  width: 25%;
+  width: 20%;
 }
 .channel-topic {
   width: 10%;
@@ -31,4 +31,8 @@
 .a-link, .a-link:link, .a-link:visited{
   text-decoration: none;
   color: black;
+}
+
+.votes {
+  width: 5%;
 }

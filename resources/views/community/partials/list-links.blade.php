@@ -4,8 +4,15 @@
 @foreach ($links as $link)
 <li class="lista-item">
     <span class="child channel label label-default" style="background: {{ $link->channel->color }};">
-        <a class="a-link" style="@if($link->channel->color == 'blue') color: white; @endif" href="/community/{{ $link->channel->slug }}"> {{ $link->channel->title }} </a>
+        <a  class="a-link" 
+            style="@if($link->channel->color == 'blue' || $link->channel->color == 'purple') color: white; @endif" 
+            href="/community/{{ $link->channel->slug }}"> 
+            {{ $link->channel->title }} 
+        </a>
     </span>
+    <button class="child votes btn btn-outline-dark text-center">
+        {{ $link->users()->count() }}
+    </button>
     <h6 class="child channel-topic">
         {{ $link->channel->slug }}
     </h6>
