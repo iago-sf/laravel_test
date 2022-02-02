@@ -19,8 +19,6 @@
             @include('flash-message')
         </div>
     </div>
-    {{$links->links()}}
-
 </div>
 
 

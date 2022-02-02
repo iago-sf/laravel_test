@@ -1,6 +1,12 @@
 @if(count($links) == 0)
 <div class="fs-5">No contributions yet</div>
+@else
+<div class="row align-content-start mb-3">
+    <a class="col col-md-2 btn btn-light {{request()->exists('popular') ? '' : 'disabled' }}" href="{{request()->url()}}">Latest</a>
+    <a class="col col-md-2 btn btn-light {{request()->exists('popular') ? 'disabled' : '' }}" href="?popular">Most popular</a>
+</div>
 @endif
+
 @foreach ($links as $link)
 <li class="lista-item">
     <span class="child channel label label-default" style="background: {{ $link->channel->color }};">
@@ -25,3 +31,7 @@
     <small class="child creator">Contributed by {{ $link->creator->name }} {{ $link->updated_at->diffForHumans() }}</small>
 </li>
 @endforeach
+
+<div class="mt-3">
+{{ $links->appends($_GET)->links() }}
+</div>
