@@ -19,27 +19,37 @@ class CommunityLinkController extends Controller
     public function index(Channel $channel = null)
     {
         $query = new CommunityLinksQuery();
+        $channels = Channel::orderBy('title','asc')->get();
+        $search = request()->exists('search') ? trim(request()->get('search'), " ") : '';
 
-        if($channel){
+        if(request()->exists('search')){
             if(request()->exists('popular')){
-                $links = $query->getByChannel($channel, 'popular');
-            
+                $links = $query->search($search, 'popular');    
+
             } else {
-                $links = $query->getByChannel($channel);
+                $links = $query->search($search);
             }
 
         } else {
-            if(request()->exists('popular')){
-                $links = $query->getMostPopular();
-            
+            if($channel){
+                if(request()->exists('popular')){
+                    $links = $query->getByChannel($channel, 'popular');
+                
+                } else {
+                    $links = $query->getByChannel($channel);
+                }
+    
             } else {
-                $links = $query->getAll();
+                if(request()->exists('popular')){
+                    $links = $query->getMostPopular();
+                
+                } else {
+                    $links = $query->getAll();
+                }
             }
         }
 
-        $channels = Channel::orderBy('title','asc')->get();
-
-        return view('community/index', compact('links', 'channels', 'channel'));
+        return view('community/index', compact('links', 'channels', 'channel', 'search'));
     }
 
     /**

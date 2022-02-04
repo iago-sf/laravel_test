@@ -14,10 +14,10 @@
 .channel {
   padding: .5rem;
   text-align: center;
-  width: 15%;
   border-top: 2px solid gray;
   border-left: 2px solid gray;
   border-right: 2px solid gray;
+  width: 15%;
 }
 .link {
   width: 40%;
@@ -34,5 +34,5 @@
 }
 
 .votes {
-  width: 5%;
+  width: 20%;
 }

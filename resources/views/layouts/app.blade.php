@@ -19,6 +19,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div id="app">
@@ -34,11 +37,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        <form class="d-flex" method="GET" action="/community">
+                            @if(request()->exists('popular')) 
+                            <input name="popular" value="" hidden>
+                            @endif
+                            <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search" value="{{ $search ?? '' }}">
+                            <button class="btn btn-outline-primary" type="submit">Search</button>
+                        </form>
+
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
