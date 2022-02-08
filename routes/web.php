@@ -33,17 +33,8 @@ Route::group(['middleware' => 'verified'], function () {
     // Rutas del community
     Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
     Route::post('votes/{link}', [App\Http\Controllers\CommunityLinkUserController::class, 'store']);
-    //Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index']);
-
     
-});
-
-Route::get('send-mail', function () {
-   
-    $details = [
-        'title' => 'Mail from ItSolutionStuff.com',
-        'body' => 'This is for testing email using smtp'
-    ];
-   
-    Mail::to('moleya1949@chinamkm.com')->send(new \App\Mail\LinksMail($details));
+    // Rutas de imagen
+    Route::get('image', [App\Http\Controllers\ImageController::class, 'index']);
+    Route::post('image/upload', [App\Http\Controllers\ImageController::class, 'store']);
 });
