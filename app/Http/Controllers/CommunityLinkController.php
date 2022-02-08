@@ -85,6 +85,7 @@ class CommunityLinkController extends Controller
                 return back()->with('success','You added a new post!');
                 
             } else {
+                
                 return back()->with('info','Your post it\'s been sent to revision.');
             }
         }
