@@ -48,4 +48,15 @@ class CommunityLinksQuery
             })->latest('updated_at')->paginate(5);
         }
     }
+
+    public function deleteById($id)
+    {
+        $link = CommunityLink::find($id);
+
+        if($link){
+            return $link->delete();
+        } else {
+            return false;
+        }
+    }
 }
