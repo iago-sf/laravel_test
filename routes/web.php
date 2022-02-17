@@ -15,26 +15,28 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::group(['middleware' => 'language'], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
-Auth::routes(['verify' => 'true']);
+    Auth::routes(['verify' => 'true']);
 
-Route::get('community/{channel?}', [App\Http\Controllers\CommunityLinkController::class, 'index'])->name('community');
+    Route::get('community/{channel?}', [App\Http\Controllers\CommunityLinkController::class, 'index'])->name('community');
 
 
-Route::group(['middleware' => 'verified'], function () {
-    /*
-     * Rutas a verificar
-     */
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    
-    // Rutas del community
-    Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
-    Route::post('votes/{link}', [App\Http\Controllers\CommunityLinkUserController::class, 'store']);
-    
-    // Rutas de imagen
-    Route::get('image', [App\Http\Controllers\ImageController::class, 'index']);
-    Route::post('image/upload', [App\Http\Controllers\ImageController::class, 'store']);
+    Route::group(['middleware' => 'verified'], function () {
+        /*
+        * Rutas a verificar
+        */
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        
+        // Rutas del community
+        Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
+        Route::post('votes/{link}', [App\Http\Controllers\CommunityLinkUserController::class, 'store']);
+        
+        // Rutas de imagen
+        Route::get('image', [App\Http\Controllers\ImageController::class, 'index']);
+        Route::post('image/upload', [App\Http\Controllers\ImageController::class, 'store']);
+    });
 });
